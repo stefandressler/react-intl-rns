@@ -1,0 +1,7 @@
+**/*.locale.jsx
+lib/**
+out/**
+node_modules/**
+tests/fixtures/**
+karma.conf.js
+webpack.config.js
