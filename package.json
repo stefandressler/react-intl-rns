@@ -1,6 +1,6 @@
 {
   "name": "react-intl-rns",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React Intl namespaced keys with fallback from specific to general",
   "author": "Stefan Dressler",
   "repository": {

@@ -1,6 +1,6 @@
 import { createElement, isValidElement } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { config } from './main';
+import { config } from './index';
 
 /**
  * Definitions of shortcuts for getting translated formatted messages.
