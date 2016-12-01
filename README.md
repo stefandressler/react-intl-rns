@@ -35,7 +35,7 @@ const messages = {
 ## Usage
 
 ```
-import RNSMessage, { rnsShorts } from 'react-intl-rns/lib/RNSMessage'
+import RNSMessage, { rnsShorts } from 'react-intl-rns'
 const { rnsM, rnsMS } = rnsShorts('very.long.name.space')
 ```
 
