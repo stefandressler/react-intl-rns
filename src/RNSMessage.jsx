@@ -75,7 +75,7 @@ export default class RNSMessage extends FormattedMessage {
     }
 
     // check deepest namespace path of given id in intl.messages
-    let rnsId = deepestIntlNS(messages, id) || id;
+    let rnsId = deepestIntlNSReduceLeft(messages, id) || id;
     let rnsDefaultMessage = `${config.defaultMessagePrefix}${rnsId}` || defaultMessage;
 
     let descriptor = { id: rnsId, description, defaultMessage: rnsDefaultMessage };
@@ -129,7 +129,7 @@ const rnsMessageStringShort = method => {
     let prefix = prefixer(namespace);
     return (id, values, ...args) => {
       let checkIntlNS = messages => {
-        return { defaultMessage: `${config.defaultMessagePrefix}${prefix(id)}`, id: deepestIntlNS(messages, prefix(id)) };
+        return { defaultMessage: `${config.defaultMessagePrefix}${prefix(id)}`, id: deepestIntlNSReduceLeft(messages, prefix(id)) };
       };
       return intl => new StringPromise(
         intl,
@@ -142,7 +142,8 @@ const rnsMessageStringShort = method => {
 /**
  * Check for key as longest possible namespace-string.
  */
-const deepestIntlNS = (messages = {}, path = '') => {
+/*
+const deepestIntlNSReduceRight = (messages = {}, path = '') => {
   let split = path.split('.');
   let key = split.pop();
   let ns = split;
@@ -157,6 +158,21 @@ const deepestIntlNS = (messages = {}, path = '') => {
 
     if (messages[deepestNSKey]) {
       return deepestNSKey;
+    }
+  }
+};
+*/
+
+const deepestIntlNSReduceLeft = (messages = {}, path = '') => {
+  let ns = path.split('.');
+  let deepestNS = [];
+  let idx;
+
+  for (messages, idx = 0; idx <= ns.length; idx += 1) {
+    deepestNS = ns.slice(idx).join('.');
+
+    if (messages[deepestNS]) {
+      return deepestNS;
     }
   }
 };
