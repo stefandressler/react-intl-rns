@@ -2,14 +2,20 @@ import { createElement, isValidElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { config } from './index';
 
+// reducer direction
+const RNS_REDUCE_FROM_LEFT = 'REDUCE_FROM_LEFT';
+const RNS_REDUCE_FROM_RIGHT = 'REDUCE_FROM_LEFT';
+
 /**
  * Definitions of shortcuts for getting translated formatted messages.
  */
-export const rnsShorts = namespace => {
+export const rnsShorts = (
+  namespace,
+  rnsReducerDirection = RNS_REDUCE_FROM_LEFT // default to reduce ns from left
+) => {
   return {
-    rnsM: rnsMessageShort(RNSMessage)(namespace),
-    rnsMS: rnsMessageStringShort('formatMessage')(namespace),
-    // rnsFM: intlMessageShort(FormattedMessage)(namespace), // use the default FormattedMessage from react-intl
+    rnsM: rnsMessageShort(RNSMessage)(namespace, rnsReducerDirection),
+    rnsMS: rnsMessageStringShort('formatMessage')(namespace, rnsReducerDirection)
   };
 };
 
@@ -31,7 +37,8 @@ export default class RNSMessage extends FormattedMessage {
       defaultMessage,
       values,
       tagName = null,
-      children
+      children,
+      rnsReducerDirection
     } = this.props;
 
     let tokenDelimiter;
@@ -75,7 +82,8 @@ export default class RNSMessage extends FormattedMessage {
     }
 
     // check deepest namespace path of given id in intl.messages
-    let rnsId = deepestIntlNSReduceLeft(messages, id) || id;
+    let rnsFind = reducer(rnsReducerDirection);
+    let rnsId = rnsFind(messages, id) || id;
     let rnsDefaultMessage = `${config.defaultMessagePrefix}${rnsId}` || defaultMessage;
 
     let descriptor = { id: rnsId, description, defaultMessage: rnsDefaultMessage };
@@ -109,13 +117,15 @@ export default class RNSMessage extends FormattedMessage {
  * Returns react element (span tag) with translated key.
  */
 const rnsMessageShort = component => {
-  return namespace => {
+  return (namespace, rnsReducerDirection) => {
     let prefix = prefixer(namespace);
     return (id, values, ...args) => {
+      let rnsId = prefix(id);
       return createElement(component, {
-        defaultMessage: `${config.defaultMessagePrefix}${prefix(id)}`,
-        id: prefix(id),
-        values
+        defaultMessage: `${config.defaultMessagePrefix}${rnsId}`,
+        id: rnsId,
+        values,
+        rnsReducerDirection
       });
     };
   };
@@ -125,11 +135,16 @@ const rnsMessageShort = component => {
  * Returns string with translated key.
  */
 const rnsMessageStringShort = method => {
-  return namespace => {
+  return (namespace, rnsReducerDirection) => {
     let prefix = prefixer(namespace);
+    let rnsFind = reducer(rnsReducerDirection);
     return (id, values, ...args) => {
       let checkIntlNS = messages => {
-        return { defaultMessage: `${config.defaultMessagePrefix}${prefix(id)}`, id: deepestIntlNSReduceLeft(messages, prefix(id)) };
+        let rnsId = prefix(id);
+        return {
+          defaultMessage: `${config.defaultMessagePrefix}${rnsId}`,
+          id: rnsFind(messages, rnsId)
+        };
       };
       return intl => new StringPromise(
         intl,
@@ -140,10 +155,43 @@ const rnsMessageStringShort = method => {
 };
 
 /**
+ * Returns the reducer/find method based on selected reduce_from.
+ */
+const reducer = direction => {
+  if (direction === RNS_REDUCE_FROM_LEFT) {
+    return (messages, id) => rnsReduceFromLeft(messages, id);
+  } else {
+    return (messages, id) => rnsReduceFromRight(messages, id);
+  }
+};
+
+/**
  * Check for key as longest possible namespace-string.
  */
-/*
-const deepestIntlNSReduceRight = (messages = {}, path = '') => {
+const rnsReduceFromLeft = (
+  messages = {},
+  path = ''
+) => {
+  let ns = path.split('.');
+  let deepestNS = [];
+  let idx;
+
+  for (messages, idx = 0; idx <= ns.length; idx += 1) {
+    deepestNS = ns.slice(idx).join('.');
+
+    if (messages[deepestNS]) {
+      return deepestNS;
+    }
+  }
+};
+
+/**
+ * Check for key as longest possible namespace-string.
+ */
+const rnsReduceFromRight = (
+  messages = {},
+  path = ''
+) => {
   let split = path.split('.');
   let key = split.pop();
   let ns = split;
@@ -158,21 +206,6 @@ const deepestIntlNSReduceRight = (messages = {}, path = '') => {
 
     if (messages[deepestNSKey]) {
       return deepestNSKey;
-    }
-  }
-};
-*/
-
-const deepestIntlNSReduceLeft = (messages = {}, path = '') => {
-  let ns = path.split('.');
-  let deepestNS = [];
-  let idx;
-
-  for (messages, idx = 0; idx <= ns.length; idx += 1) {
-    deepestNS = ns.slice(idx).join('.');
-
-    if (messages[deepestNS]) {
-      return deepestNS;
     }
   }
 };
