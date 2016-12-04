@@ -221,7 +221,7 @@ module.exports = {
     'react/jsx-max-props-per-line': 0,
     'react/jsx-no-bind': [2, { ignoreRefs: true }],
     'react/jsx-no-duplicate-props': 2,
-    'react/jsx-no-literals': 1,
+    'react/jsx-no-literals': 0,
     'react/jsx-no-undef': 2,
     'react/jsx-pascal-case': 2,
     // 'react/jsx-quotes': 1,
