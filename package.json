@@ -57,6 +57,7 @@
     "react-addons-test-utils": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-unit": "^2.0.0",
+    "sinon": "^1.17.6",
     "standard-version": "^3.0.0",
     "tape": "^4.6.3",
     "tape-jsx-equals": "^1.0.0"

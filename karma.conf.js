@@ -1,8 +1,3 @@
-// var webpack = require('webpack');
-let webpackConfig = require('./webpack.config');
-webpackConfig.devtool = 'inline-source-map';
-webpackConfig.externals = {};
-
 module.exports = function (config) {
   config.set({
     browsers: ['PhantomJS'], // run in PhantomJS, Chrome, ...
@@ -44,9 +39,7 @@ module.exports = function (config) {
     webpack: {
       externals: {
         // Allow Enzyme to work with webpack
-        // 'jsdom': 'window',
-        // 'cheerio': 'window',
-        'react/addons': true, // important!!
+        'react/addons': true,
         'react/lib/ExecutionEnvironment': true,
         'react/lib/ReactContext': true
       },

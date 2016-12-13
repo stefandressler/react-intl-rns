@@ -140,7 +140,7 @@ module.exports = {
     'jsx-quotes': [2, 'prefer-single'],
     'key-spacing': 2,
     'keyword-spacing': 2,
-    'linebreak-style': [2, 'unix'],
+    // 'linebreak-style': [2, 'unix'],
     'lines-around-comment': 2,
     'max-depth': 1,
     'max-len': 0,
