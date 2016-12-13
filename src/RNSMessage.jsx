@@ -22,7 +22,7 @@ export const rnsShorts = (
 /**
  * mainly copy/paste from react-intl FormattedMessage render method.
  */
-export default class RNSMessage extends FormattedMessage {
+export class RNSMessage extends FormattedMessage {
   static displayName = 'RNSMessage';
 
   render() {
@@ -38,7 +38,7 @@ export default class RNSMessage extends FormattedMessage {
       values,
       tagName = null,
       children,
-      rnsReducerDirection
+      rnsReducerDirection = RNS_REDUCE_FROM_LEFT
     } = this.props;
 
     let tokenDelimiter;

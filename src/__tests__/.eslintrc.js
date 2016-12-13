@@ -18,6 +18,7 @@ module.exports = {
     'global-require': 0,
     // Console output sometimes needs to be tested.
     'no-console': 0,
+    'no-shadow': 0,
     // Magic numbers are fine in tests.
     'no-magic-numbers': 0,
     'rapid7/static-magic-numbers': 0,
@@ -27,6 +28,7 @@ module.exports = {
     'quotes': [0, 'single'],
     // Usually there is just a single component created in a case.
     'react/display-name': 0,
+    'react/jsx-no-bind': 0,
     // Tests are written more for readiblity than performance.
     'react/prefer-stateless-function': 0
   }

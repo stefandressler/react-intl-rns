@@ -13,9 +13,12 @@ module.exports = {
       amd: 'react-dom'
     }
   },
+  node: {
+    fs: 'empty'
+  },
   devtool: 'sourcemap',
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx', '.json']
   },
   module: {
     loaders: [
@@ -25,11 +28,19 @@ module.exports = {
         loader: 'babel',
         query: {
           presets: [
+            "react",
             "es2015",
-            "stage-0",
-            "react"
+            "stage-0"
+          ],
+          plugins: [
+            'react-html-attrs'
           ]
         }
+      },
+      // Allow Enzyme to work with webpack
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   }
