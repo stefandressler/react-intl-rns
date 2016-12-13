@@ -3,15 +3,15 @@ import { FormattedMessage } from 'react-intl';
 import { config } from './index';
 
 // reducer direction
-const RNS_REDUCE_FROM_LEFT = 'REDUCE_FROM_LEFT';
-const RNS_REDUCE_FROM_RIGHT = 'REDUCE_FROM_LEFT';
+const RNS_REDUCE_LEFT_TO_RIGHT = 'REDUCE_LTR';
+const RNS_REDUCE_RIGHT_TO_LEFT = 'REDUCE_RTL';
 
 /**
  * Definitions of shortcuts for getting translated formatted messages.
  */
 export const rnsShorts = (
   namespace,
-  rnsReducerDirection = RNS_REDUCE_FROM_LEFT // default to reduce ns from left
+  rnsReducerDirection = RNS_REDUCE_LEFT_TO_RIGHT // default to reduce ns from left
 ) => {
   return {
     rnsM: rnsMessageShort(RNSMessage)(namespace, rnsReducerDirection),
@@ -38,7 +38,7 @@ export class RNSMessage extends FormattedMessage {
       values,
       tagName = null,
       children,
-      rnsReducerDirection = RNS_REDUCE_FROM_LEFT
+      rnsReducerDirection = RNS_REDUCE_LEFT_TO_RIGHT
     } = this.props;
 
     let tokenDelimiter;
@@ -158,17 +158,17 @@ const rnsMessageStringShort = method => {
  * Returns the reducer/find method based on selected reduce_from.
  */
 const reducer = direction => {
-  if (direction === RNS_REDUCE_FROM_LEFT) {
-    return (messages, id) => rnsReduceFromLeft(messages, id);
+  if (direction === RNS_REDUCE_LEFT_TO_RIGHT) {
+    return (messages, id) => rnsReduceLTR(messages, id);
   } else {
-    return (messages, id) => rnsReduceFromRight(messages, id);
+    return (messages, id) => rnsReduceRTL(messages, id);
   }
 };
 
 /**
  * Check for key as longest possible namespace-string.
  */
-const rnsReduceFromLeft = (
+const rnsReduceLTR = (
   messages = {},
   path = ''
 ) => {
@@ -188,7 +188,7 @@ const rnsReduceFromLeft = (
 /**
  * Check for key as longest possible namespace-string.
  */
-const rnsReduceFromRight = (
+const rnsReduceRTL = (
   messages = {},
   path = ''
 ) => {

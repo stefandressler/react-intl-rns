@@ -13,11 +13,10 @@ tape('----- <Component /> -----', t => {
   t.ok(true); // just for writing the headline to console
 
   t.test('<RNSMessage /> full namespaced key', t => {
-    const ns = 'reverse.name.space.title';
     const messages = messagesFull;
-    const expected = messages[ns];
+    const expected = messages['reverse.name.space.title'];
 
-    const rnsMessageProps = { id: ns };
+    const rnsMessageProps = { id: 'reverse.name.space.title' };
 
     const { mountIntl } = withIntl({ locale: 'sv-SE', messages});
     const component = mountIntl(<RNSMessage {...rnsMessageProps} />);
@@ -29,11 +28,10 @@ tape('----- <Component /> -----', t => {
   });
 
   t.test('<RNSMessage /> fallback namespaced key', t => {
-    const ns = 'name.space.title';
     const messages = messagesFirstFallback;
-    const expected = messages[ns];
+    const expected = messages['name.space.title'];
 
-    const rnsMessageProps = { id: ns };
+    const rnsMessageProps = { id: 'name.space.title' };
 
     const { mountIntl } = withIntl({ locale: 'sv-SE', messages});
     const component = mountIntl(<RNSMessage {...rnsMessageProps} />);

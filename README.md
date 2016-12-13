@@ -40,8 +40,8 @@ const { rnsM, rnsMS } = rnsShorts('very.long.name.space')
 ```
 
 It exists two different find-versions when reducing the namespace: from left and from right
-where _from left_ is the default. If you want to find the key by reducing the namespace from
-right you have to use ```const { rnsM, rnsMS } = rnsShorts('very.long.name.space', 'REDUCE_FROM_RIGHT')```
+where _from left_ (REDUCE_LTR) is the default. If you want to find the key by reducing the namespace from
+right (REDUCE_RTL) you have to use ```const { rnsM, rnsMS } = rnsShorts('very.long.name.space', 'REDUCE_RTL')```
 
 ```
 <RNSMessage
