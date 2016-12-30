@@ -36,7 +36,7 @@ export class RNSMessage extends FormattedMessage {
       description,
       defaultMessage,
       values,
-      tagName = null,
+      tagName = 'span',
       children,
       rnsReducerDirection = RNS_REDUCE_LEFT_TO_RIGHT
     } = this.props;

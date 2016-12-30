@@ -1,6 +1,6 @@
 {
   "name": "react-intl-rns",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "React Intl namespaced keys with fallback from specific to general",
   "author": "Stefan Dressler",
   "repository": {
@@ -73,7 +73,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "cross-env": "^3.1.3",
     "react": "^15.4.1",
-    "react-intl": "^2.1.5",
+    "react-intl": "^2.2.2",
     "rimraf": "^2.5.4",
     "webpack": "^1.13.3"
   },
